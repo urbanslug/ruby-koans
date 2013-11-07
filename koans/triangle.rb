@@ -15,15 +15,15 @@
 #
 def triangle(a, b, c)
 	sides = [a, b, c]
-	if sides.min > 0
-		return :equilateral if sides.uniq.size == 1
-		return :isosceles   if sides.uniq.size == 2
-		return :scalene     if sides.uniq.size == 3
-	else
-		"Not a triangle"
-	end
+	condition =  sides.min <= 0 || (sides.count(1) == 2 && sides.count(3) ==1) || (sides.count(2) == 2 && sides.count(4) == 1)
+
+	raise TriangleError if condition
+	return :equilateral if sides.uniq.size == 1
+	return :isosceles   if sides.uniq.size == 2 
+	return :scalene     if sides.uniq.size == 3
 end
 
 # Error class used in part 2.  No need to change this code.
 class TriangleError < StandardError
+
 end
