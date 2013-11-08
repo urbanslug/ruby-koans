@@ -29,7 +29,79 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 # Your goal is to write the score method.
 
+class Greed < Array
+	
+	def initialize(dice)
+		@dice = dice
+	end
+
+	def compute_score
+		case
+		
+		when @dice.size == 0
+			return 0
+
+		when @dice.size == 1
+			return 100 if @dice[0] == 1
+                        return 50  if @dice[0] == 5
+			return 0
+
+		when @dice.size == 2
+			return 200 if @dice.uniq[0] == 1 && @dice.uniq.size == 1
+			return 100 if @dice.uniq[0] == 5 && @dice.uniq.size == 1
+			return 0
+
+		when @dice.size == 3
+			return 1000 if @dice.uniq[0] == 1 && @dice.uniq.size == 1
+			return 100 * (@dice.uniq[0]) if @dice.uniq.size == 1
+			return 0
+
+		when @dice.size == 4 || @dice.size == 5
+			return for4n5
+		end
+	end
+
+	def for4n5
+
+		preliminary_score = 0
+
+		if @dice.uniq.size > 3
+			preliminary_score += @dice.count(1)*100 if @dice.count(1)>3
+			preliminary_score += 1000 if  @dice.count(1) >= 3
+			preliminary_score += 200  if  @dice.count(2) == 3
+			preliminary_score += 300  if  @dice.count(3) == 3
+			preliminary_score += 400  if  @dice.count(4) == 3
+			preliminary_score += 500  if  @dice.count(5) >= 3
+			preliminary_score += 600  if  @dice.count(6) == 3
+			preliminary_score += (@dice.count(5)-3)*50  if @dice.count(5)>3
+			preliminary_score += @dice.count(5)*50 if @dice.count(5) < 3
+			preliminary_score += (@dice.count(1)-3)*100 if @dice.count(1)>3
+			return preliminary_score
+		else
+    		        preliminary_score += @dice.count(1)*100 if @dice.count(1) < 3
+		        preliminary_score += 1000 if @dice.count(1) >= 3
+			preliminary_score += 200 if  @dice.count(2) == 3
+		        preliminary_score += 300 if  @dice.count(3) == 3
+		        preliminary_score += 400 if  @dice.count(4) == 3
+			preliminary_score += 500 if  @dice.count(5) >= 3
+		        preliminary_score += 600 if  @dice.count(6) == 3
+			preliminary_score += (@dice.count(5)-3)*50 if @dice.count(5) > 3
+			preliminary_score += @dice.count(5)*50 if @dice.count(5) < 3
+			preliminary_score += (@dice.count(1)-3)*100 if @dice.count(1)>3
+
+			return preliminary_score
+		end
+
+		return preliminary_score
+	end
+end
+
+
 def score(dice)
+	current_dice_roll = Greed.new(dice)
+
+	score = current_dice_roll.compute_score
+	return score
   # You need to write this method
 end
 
