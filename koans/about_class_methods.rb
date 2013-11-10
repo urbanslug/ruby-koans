@@ -23,7 +23,7 @@ class AboutClassMethods < Neo::Koan
   end
 
   def test_classes_have_methods
-    assert Dog.methods.size > 0 
+    assert Dog.methods.size > 0
   end
 
   def test_you_can_define_methods_on_individual_objects

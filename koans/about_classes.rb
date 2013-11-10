@@ -6,7 +6,7 @@ class AboutClasses < Neo::Koan
 
   def test_instances_of_classes_can_be_created_with_new
     fido = Dog.new
-    assert_equal Dog, fido.class
+    assert_equal AboutClasses::Dog, fido.class
   end
 
   # ------------------------------------------------------------------
@@ -30,7 +30,7 @@ class AboutClasses < Neo::Koan
     fido.set_name("Fido")
 
     assert_raise(NoMethodError) do
-          fido.name
+      fido.name
     end
 
     assert_raise(SyntaxError) do
@@ -169,7 +169,7 @@ class AboutClasses < Neo::Koan
 
   def test_to_s_is_used_in_string_interpolation
     fido = Dog7.new("Fido")
-    assert_equal "My dog is Fido" , "My dog is #{fido}"
+    assert_equal "My dog is Fido", "My dog is #{fido}"
   end
 
   def test_inspect_provides_a_more_complete_string_version
